@@ -1,17 +1,35 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Parent :items="formatted"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+// import HelloWorld from './components/HelloWorld.vue'
+/* eslint-disable */
+import Parent from './components/Parent.vue';
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Parent
+  },
+  data: function() {
+    return {
+      tooltipTitle: 'it has an {email}'
+    }
+  },
+  created: function(){
+  },
+  computed: {
+    formatted: function() {
+      return window.clients.map(client => {
+        return {
+          ...client,
+          disabledReason: client.disabled ? this.tooltipTitle.replace('{email}', client.email): ''
+        }
+      });
+    }
   }
 }
 </script>
